@@ -1,0 +1,152 @@
+
+Importing the dataset
+```{r}
+data <- read.csv("C:\\Users\\HP\\Desktop\\DS HA\\SYB64_263_202110_Production, Trade and Supply of Energy (2).csv", header = TRUE)
+head(data)
+```
+
+Converting string values of 'value' to integer by removing ','
+
+```{r}
+data$Value <- as.numeric(gsub(",","",data$Value))
+```
+
+Importing library ggplot2
+
+```{r}
+library(ggplot2)
+```
+
+Importing a new dataset consisting of only 'Primary energy production (petajoules)' values
+
+This data set has only the 5 countries which we are comparing - 
+1. India
+2. United Kingdom
+3. United States of America
+4. Italy
+5. Israel
+
+
+```{r}
+data_primary <- read.csv("C:\\Users\\HP\\Desktop\\DS HA\\Primary_Energy.xlsx.csv", header = TRUE)
+head(data_primary)
+```
+
+Performing the same data cleaning steps
+
+```{r}
+data_primary$Value <- as.numeric(gsub(",","",data_primary$Value))
+```
+
+Visualizing a grouped bar plot to compare these values
+
+```{r}
+ggplot(data_primary, aes(fill=ï..Country.Region, y=Value, x=Year)) + 
+    geom_bar(position="dodge", stat="identity") + theme(axis.text.x =element_text(angle=90,vjust=0.5),plot.title=element_text(color="black",size=16,face="italic"))+labs(x="",y="Value",title="Primary Production of 5 countries")
+```
+
+After comparing Primary....
+
+```{r}
+data_imports <- read.csv("C:\\users\\HP\\Desktop\\DS HA\\Dataset_NetImports.csv", header = TRUE)
+head(data)
+```
+```{r}
+data_imports$Value <- as.numeric(gsub(",","",data_imports$Value))
+
+```
+
+```{r}
+ggplot(data_imports, aes(fill=Country.Region, y=Value, x=Year)) + 
+    geom_bar(position="dodge", stat="identity") + theme(axis.text.x =element_text(angle=90,vjust=0.5),plot.title=element_text(color="black",size=16,face="italic"))+labs(x="",y="Value",title="Net Imports of 5 countries")
+```
+
+```{r}
+data_total_supply <- read.csv("C:\\users\\HP\\Desktop\\DS HA\\totalSupply.csv", header = TRUE)
+head(data_total_supply)
+```
+
+```{r}
+data_total_supply$Value <- as.numeric(gsub(",","",data_total_supply$Value))
+
+```
+
+```{r}
+ggplot(data_total_supply, aes(fill=ï..Country.Region, y=Value, x=Year)) + 
+    geom_bar(position="dodge", stat="identity") + theme(axis.text.x =element_text(angle=90,vjust=0.5),plot.title=element_text(color="black",size=16,face="italic"))+labs(x="",y="Value",title="Total Supply of 5 countries")
+```
+
+```{r}
+data_stocks <- read.csv("C:\\users\\HP\\Desktop\\DS HA\\stocks.csv", header = TRUE)
+head(data_stocks)
+```
+
+```{r}
+data_stocks$Value <- as.numeric(gsub(",","",data_stocks$Value))
+
+```
+
+```{r}
+ggplot(data_stocks, aes(fill=ï..Country.Region, y=Value, x=Year)) + 
+    geom_bar(position="dodge", stat="identity") + theme(axis.text.x =element_text(angle=90,vjust=0.5),plot.title=element_text(color="black",size=16,face="italic"))+labs(x="",y="Value",title="Change in stocks of 5 countries")
+```
+
+```{r}
+data_supply_pc <- read.csv("C:\\users\\HP\\Desktop\\DS HA\\Supply_per_capita.csv", header = TRUE)
+head(data_supply_pc)
+```
+```{r}
+data_supply_pc$Value <- as.numeric(gsub(",","",data_supply_pc$Value))
+
+```
+
+```{r}
+ggplot(data_supply_pc, aes(fill=Country.Region, y=Value, x=Year)) + 
+    geom_bar(position="dodge", stat="identity") + theme(axis.text.x =element_text(angle=90,vjust=0.5),plot.title=element_text(color="black",size=16,face="italic"))+labs(x="",y="Value",title="Supply per capita of 5 countries")
+```
+```{r}
+library(ggplot2)
+theme_set(theme_classic())
+```
+
+
+```{r}
+data_total_supply_box <- read.csv("C:\\Users\\HP\\Desktop\\DS HA\\totalSupply.csv", header = TRUE)
+head(data_total_supply_box)
+```
+
+
+```{r}
+library(ggplot2)
+library(dplyr)
+glimpse(data_supply_pc)
+box <- ggplot(data_supply_pc,aes(x=Country.Region
+,y=Value))
+box + geom_boxplot()
+
+box +
+    geom_boxplot(outlier.colour = "red",
+        outlier.shape = 2,
+        outlier.size = 3) +
+    theme_classic()
+
+box +
+    geom_boxplot() +
+    stat_summary(fun.y = mean,
+        geom = "point",
+        size = 3,
+        color = "steelblue") +
+    theme_classic()
+
+box +
+    geom_boxplot() +
+    geom_dotplot(binaxis = 'y',
+        dotsize = 1,
+        stackdir = 'center') +
+    theme_classic()
+
+ggplot(data_supply_pc, aes(x = Country.Region, y = Value, color = Country.Region)) +
+    geom_boxplot() +
+    theme_classic()
+```
+
